@@ -1,10 +1,8 @@
-Multiuser example
-=================
+# Multiuser example
 
 This installs a single PgBouncer instance that proxies to multiple databases for multiple users.
 
-Installation
-------------
+## Installation
 
 Generate authentication credentials for all users:
 
@@ -29,23 +27,21 @@ kubectl create secret generic pgbouncer-example-config --from-file=pgbouncer.ini
 Install the application:
 
 ```
-kubectl apply -f https://raw.githubusercontent.com/edoburu/docker-pgbouncer/master/examples/kubernetes/multiuser/service.yml
-kubectl apply -f https://raw.githubusercontent.com/edoburu/docker-pgbouncer/master/examples/kubernetes/multiuser/deployment.yml
+kubectl apply -f https://raw.githubusercontent.com/whtsky/docker-pgbouncer/master/examples/kubernetes/multiuser/service.yml
+kubectl apply -f https://raw.githubusercontent.com/whtsky/docker-pgbouncer/master/examples/kubernetes/multiuser/deployment.yml
 ```
 
-Removal
--------
+## Removal
 
 ```
-kubectl delete -f https://raw.githubusercontent.com/edoburu/docker-pgbouncer/master/examples/kubernetes/multiuser/service.yml
-kubectl delete -f https://raw.githubusercontent.com/edoburu/docker-pgbouncer/master/examples/kubernetes/multiuser/deployment.yml
+kubectl delete -f https://raw.githubusercontent.com/whtsky/docker-pgbouncer/master/examples/kubernetes/multiuser/service.yml
+kubectl delete -f https://raw.githubusercontent.com/whtsky/docker-pgbouncer/master/examples/kubernetes/multiuser/deployment.yml
 kubectl delete secret pgbouncer-example-config
 ```
 
-Connecting to the admin console
--------------------------------
+## Connecting to the admin console
 
-When an *admin user* is defined, and it has a password in the `userlist.txt`, it can connect to the special `pgbouncer` database:
+When an _admin user_ is defined, and it has a password in the `userlist.txt`, it can connect to the special `pgbouncer` database:
 
 ```
 psql postgres://postgres@pgbouncer-example/pgbouncer  # outside container
@@ -68,8 +64,7 @@ PAUSE;
 RESUME;
 ```
 
-About create-secrets
---------------------
+## About create-secrets
 
 The `create-secrets` script is a small wrapper to allow creating secrets without having to do BASE64 encoding yourself. The `pgbouncer-example-config.yml` is generated using:
 

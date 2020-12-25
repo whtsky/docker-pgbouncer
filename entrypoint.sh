@@ -25,13 +25,13 @@ if [ -n "$DATABASE_URL" ]; then
   fi
 
   # extract the host -- updated
-  hostport=`echo $url | sed -e s,$userpass@,,g | cut -d/ -f1`
-  port=`echo $hostport | grep : | cut -d: -f2`
+  hostport=$(echo $url | sed -e s,$userpass@,,g | cut -d/ -f1)
+  port=$(echo $hostport | grep : | cut -d: -f2)
   if [ -n "$port" ]; then
-      DB_HOST=`echo $hostport | grep : | cut -d: -f1`
-      DB_PORT=$port
+    DB_HOST=$(echo $hostport | grep : | cut -d: -f1)
+    DB_PORT=$port
   else
-      DB_HOST=$hostport
+    DB_HOST=$hostport
   fi
 
   DB_NAME="$(echo $url | grep / | cut -d/ -f2-)"
@@ -41,20 +41,20 @@ fi
 # Notice that `docker inspect` will show unencrypted env variables.
 if [ -n "$DB_USER" -a -n "$DB_PASSWORD" ] && ! grep -q "^\"$DB_USER\"" ${PG_CONFIG_DIR}/userlist.txt; then
   if [ "$AUTH_TYPE" != "plain" ]; then
-     pass="md5$(echo -n "$DB_PASSWORD$DB_USER" | md5sum | cut -f 1 -d ' ')"
+    pass="md5$(echo -n "$DB_PASSWORD$DB_USER" | md5sum | cut -f 1 -d ' ')"
   else
-     pass="$DB_PASSWORD"
+    pass="$DB_PASSWORD"
   fi
-  echo "\"$DB_USER\" \"$pass\"" >> ${PG_CONFIG_DIR}/userlist.txt
+  echo "\"$DB_USER\" \"$pass\"" >>${PG_CONFIG_DIR}/userlist.txt
   echo "Wrote authentication credentials to ${PG_CONFIG_DIR}/userlist.txt"
 fi
 
 if [ ! -f ${PG_CONFIG_DIR}/pgbouncer.ini ]; then
   echo "Create pgbouncer config in ${PG_CONFIG_DIR}"
 
-# Config file is in “ini” format. Section names are between “[” and “]”.
-# Lines starting with “;” or “#” are taken as comments and ignored.
-# The characters “;” and “#” are not recognized when they appear later in the line.
+  # Config file is in “ini” format. Section names are between “[” and “]”.
+  # Lines starting with “;” or “#” are taken as comments and ignored.
+  # The characters “;” and “#” are not recognized when they appear later in the line.
   printf "\
 ################## Auto generated ##################
 [databases]
@@ -142,9 +142,9 @@ ${TCP_KEEPIDLE:+tcp_keepidle = ${TCP_KEEPIDLE}\n}\
 ${TCP_KEEPINTVL:+tcp_keepintvl = ${TCP_KEEPINTVL}\n}\
 ${TCP_USER_TIMEOUT:+tcp_user_timeout = ${TCP_USER_TIMEOUT}\n}\
 ################## end file ##################
-" > ${PG_CONFIG_DIR}/pgbouncer.ini
-cat ${PG_CONFIG_DIR}/pgbouncer.ini
-echo "Starting $*..."
+" >${PG_CONFIG_DIR}/pgbouncer.ini
+  cat ${PG_CONFIG_DIR}/pgbouncer.ini
+  echo "Starting $*..."
 fi
 
 exec "$@"

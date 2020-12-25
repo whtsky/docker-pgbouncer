@@ -1,11 +1,9 @@
-Singleuser example
-==================
+# Singleuser example
 
 This installs a single PgBouncer instance that accepts a single user for a single database.
 This can be used to bind PgBouncer to your web application, or even include a simular configuration inside a pod.
 
-Installation
-------------
+## Installation
 
 Enter the proper values in `pgbouncer-example-env.secrets`.
 
@@ -24,21 +22,19 @@ kubectl create secret generic pgbouncer-example-env --from-env-file="pgbouncer-e
 Install the application:
 
 ```
-kubectl apply -f https://raw.githubusercontent.com/edoburu/docker-pgbouncer/master/examples/kubernetes/singleuser/service.yml
-kubectl apply -f https://raw.githubusercontent.com/edoburu/docker-pgbouncer/master/examples/kubernetes/singleuser/deployment.yml
+kubectl apply -f https://raw.githubusercontent.com/whtsky/docker-pgbouncer/master/examples/kubernetes/singleuser/service.yml
+kubectl apply -f https://raw.githubusercontent.com/whtsky/docker-pgbouncer/master/examples/kubernetes/singleuser/deployment.yml
 ```
 
-Removal
--------
+## Removal
 
 ```
-kubectl delete -f https://raw.githubusercontent.com/edoburu/docker-pgbouncer/master/examples/kubernetes/singleuser/service.yml
-kubectl delete -f https://raw.githubusercontent.com/edoburu/docker-pgbouncer/master/examples/kubernetes/singleuser/deployment.yml
+kubectl delete -f https://raw.githubusercontent.com/whtsky/docker-pgbouncer/master/examples/kubernetes/singleuser/service.yml
+kubectl delete -f https://raw.githubusercontent.com/whtsky/docker-pgbouncer/master/examples/kubernetes/singleuser/deployment.yml
 kubectl delete secret pgbouncer-example-env
 ```
 
-About create-secrets
---------------------
+## About create-secrets
 
 The `create-secrets` script is a small wrapper to allow creating secrets without having to do BASE64 encoding yourself. Given an input file like:
 
@@ -61,4 +57,3 @@ metadata:
   name: pgbouncer-example-env
   namespace: default
 ```
-

@@ -1,25 +1,21 @@
-PgBouncer usage in Kubernetes
-=============================
+# PgBouncer usage in Kubernetes
 
 TL;DR:
 
-* [singleuser](https://github.com/edoburu/docker-pgbouncer/tree/master/examples/kubernetes/singleuser) - one PgBouncer for a single database.
-* [multiuser](https://github.com/edoburu/docker-pgbouncer/tree/master/examples/kubernetes/multiuser) - one PgBouncer for multiple databases and users.
+- [singleuser](https://github.com/whtsky/docker-pgbouncer/tree/master/examples/kubernetes/singleuser) - one PgBouncer for a single database.
+- [multiuser](https://github.com/whtsky/docker-pgbouncer/tree/master/examples/kubernetes/multiuser) - one PgBouncer for multiple databases and users.
 
-Possible usages
----------------
+## Possible usages
 
 Using PgBouncer is possible in different situations:
 
-* A single instance per application (see the [singleuser example](https://github.com/edoburu/docker-pgbouncer/tree/master/examples/kubernetes/singleuser))
-* A shared instance for many applications (see the [multiuser example](https://github.com/edoburu/docker-pgbouncer/tree/master/examples/kubernetes/multiuser)).
-* A single instance inside your application pod. This ensures the PgBouncer Pod lives close to the application, reducing connection time.
+- A single instance per application (see the [singleuser example](https://github.com/whtsky/docker-pgbouncer/tree/master/examples/kubernetes/singleuser))
+- A shared instance for many applications (see the [multiuser example](https://github.com/whtsky/docker-pgbouncer/tree/master/examples/kubernetes/multiuser)).
+- A single instance inside your application pod. This ensures the PgBouncer Pod lives close to the application, reducing connection time.
 
 When PgBouncer runs inside the application Pod, it can be accessed via `localhost`. Otherwise, use the service DNS name (`servicename` or `servicename.namespace`) to connect to it.
 
-
-Connecting
-----------
+## Connecting
 
 Inside any Pod, the example service should be reachable with the DNS name `pgbouncer-example` and `pgbouncer-example.default` (FQDN: `servicename.namespace.svc.cluster.local`). Thus you can connect to it using:
 
@@ -40,8 +36,7 @@ Make sure PostgreSQL at least accepts connections from the machine where PgBounc
 host    all             all             10.0.0.0/8              md5
 ```
 
-Removing the example
----------------------
+## Removing the example
 
 ```sh
 kubectl delete deployment pgbouncer-example

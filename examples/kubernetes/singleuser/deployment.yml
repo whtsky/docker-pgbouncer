@@ -6,10 +6,10 @@ metadata:
   labels:
     app: pgbouncer-example
 spec:
-  revisionHistoryLimit: 10  # removes old replicasets for deployment rollbacks
+  revisionHistoryLimit: 10 # removes old replicasets for deployment rollbacks
   strategy:
     rollingUpdate:
-      maxUnavailable: 0  # Avoid Terminating and ContainerCreating at the same time
+      maxUnavailable: 0 # Avoid Terminating and ContainerCreating at the same time
   selector:
     matchLabels:
       app: pgbouncer-example
@@ -23,13 +23,13 @@ spec:
       #  purpose: apps
       containers:
         - name: pgbouncer
-          image: edoburu/pgbouncer:1.9.0
+          image: ghcr.io/whtsky/pgbouncer:1.9.0
           #imagePullPolicy: Always
           ports:
             - containerPort: 5432
           envFrom:
             - secretRef:
-               name: pgbouncer-example-env
+                name: pgbouncer-example-env
           env:
             - name: POOL_MODE
               value: session
@@ -43,8 +43,9 @@ spec:
             preStop:
               exec:
                 # Allow existing queries clients to complete within 120 seconds
-                command: ["/bin/sh", "-c", "killall -INT pgbouncer && sleep 120"]
+                command:
+                  ["/bin/sh", "-c", "killall -INT pgbouncer && sleep 120"]
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:
-              drop: ['all']
+              drop: ["all"]
