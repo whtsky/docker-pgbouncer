@@ -8,6 +8,8 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     steps:
+      - name: Inject slug/short variables
+        uses: rlespinasse/github-slug-action@v3.x
       - name: Check out code into the Go module directory
         uses: actions/checkout@v2
       - name: Set up QEMU
@@ -25,6 +27,13 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GHCR_PAT }}
+      - name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: "ghcr.io/${{ github.repository_owner }}/pgbouncer:${{ env.GITHUB_REF_SLUG }}"
       - name: Build latest and push
         if: github.ref == 'refs/heads/master'
         uses: docker/build-push-action@v2
@@ -33,10 +42,3 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: "ghcr.io/${{ github.repository_owner }}/pgbouncer:latest"
-      - name: Build and push
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          platforms: linux/amd64,linux/arm64
-          push: true
-          tags: "ghcr.io/${{ github.repository_owner }}/pgbouncer:${GITHUB_REF##*/}"
