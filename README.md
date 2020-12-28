@@ -1,6 +1,7 @@
 # PgBouncer Docker image
 
-This is a minimal PgBouncer image, based on Alpine Linux. Forked from https://github.com/whtsky/docker-pgbouncer
+This is a minimal PgBouncer image, based on Alpine Linux.
+Forked from https://github.com/edoburu/docker-pgbouncer
 
 Features:
 
