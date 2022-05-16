@@ -28,7 +28,7 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GHCR_PAT }}
       - name: Build and push
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v3
         with:
           context: .
           platforms: linux/amd64,linux/arm64
@@ -36,7 +36,7 @@ jobs:
           tags: "ghcr.io/${{ github.repository_owner }}/pgbouncer:${{ env.GITHUB_REF_SLUG }}"
       - name: Build latest and push
         if: github.ref == 'refs/heads/master'
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v3
         with:
           context: .
           platforms: linux/amd64,linux/arm64
